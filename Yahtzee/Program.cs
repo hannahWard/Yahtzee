@@ -31,7 +31,7 @@ namespace Yahtzee
             int[] firstComputerRoll = new int[5];
             int[] secondComputerRoll = new int[5];
             int[] finalComputerRoll = new int[5];
-            int finalComputerScore = 0;
+            int bestComputerScore = 0;
             int score = 0;
             
             
@@ -40,45 +40,44 @@ namespace Yahtzee
 
             roll = FirstRoll(roll, die);
             Console.WriteLine(String.Join(", ",roll));
-           
             Console.WriteLine("Choose which number die you would like to keep.");
             int result = int.Parse(Console.ReadLine());
 
             secondRoll = RollKeep(roll, rollKeep, result);
-
             Console.WriteLine($"Your new roll including previously kept die is: " +
                 $"\n{String.Join(", ",SecondRoll(die,secondRoll))}");
 
             thirdRoll = SecondRoll(die, secondRoll);
-
             Console.WriteLine("Choose which number die you would like to keep.");
             int newResult = int.Parse(Console.ReadLine());
 
             finalRoll = RollKeep(thirdRoll, finalRollKeep, newResult);
             finalRoll = SecondRoll(die, finalRoll);
             Console.WriteLine(String.Join(", ",finalRoll));
-
             
             Console.WriteLine($"Your final score is: {Counters(finalRoll)}");
             userScore = Counters(finalRoll);
+
+            Console.Clear();
+            Console.WriteLine("Now it's the computer's turn!");
 
             firstComputerRoll = FirstRoll(newRoll, die);
             Console.WriteLine(String.Join(", ", firstComputerRoll));
 
             int firstComputerRollTotal = Counters(firstComputerRoll);
-            Console.WriteLine(firstComputerRollTotal);
+            Console.WriteLine($"First score: {firstComputerRollTotal}");
 
             secondComputerRoll = FirstRoll(newRoll, die);
             Console.WriteLine(String.Join(", ", secondComputerRoll));
 
             int secondComputerRollTotal = Counters(secondComputerRoll);
-            Console.WriteLine(secondComputerRollTotal);
+            Console.WriteLine($"Second score: {secondComputerRollTotal}");
 
             finalComputerRoll = FirstRoll(newRoll, die);
             Console.WriteLine(String.Join(", ", finalComputerRoll));
 
             int finalComputerRollTotal = Counters(finalComputerRoll);
-            Console.WriteLine(finalComputerRollTotal);
+            Console.WriteLine($"Third score: {finalComputerRollTotal}");
 
 
 
@@ -93,20 +92,21 @@ namespace Yahtzee
 
             if (score >= finalComputerRollTotal)
             {
-                finalComputerScore = score;
+                bestComputerScore = score;
             }
             else if (score < finalComputerRollTotal)
             {
-                finalComputerScore = finalComputerRollTotal;
+                bestComputerScore = finalComputerRollTotal;
             }
 
-            Console.WriteLine(finalComputerScore);
+            Console.WriteLine($"The highest computer score is {bestComputerScore}");
+            Console.WriteLine($"Your score was {userScore}");
 
-            if (userScore >= finalComputerScore)
+            if (userScore >= bestComputerScore)
             {
                 Console.WriteLine("You are the winner!");
             }
-            else if (finalComputerScore > userScore)
+            else if (bestComputerScore > userScore)
             {
                 Console.WriteLine("You lose. Better luck next time!");
             }
